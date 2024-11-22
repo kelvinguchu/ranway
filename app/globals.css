@@ -2,20 +2,90 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+/* Base theme variables */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --navy-blue: 30, 58, 138;
+    --gold: 251, 191, 36;
+    --white: 255, 255, 255;
+    
+    /* Keep other existing root variables */
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+/* Custom utility classes */
+@layer components {
+  .gradient-bg {
+    background: linear-gradient(
+      135deg,
+      rgba(var(--navy-blue), 0.15),
+      rgba(var(--white), 0.9) 50%,
+      rgba(var(--gold), 0.15)
+    );
+  }
+
+  .glass-effect {
+    background: rgba(var(--white), 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(var(--white), 0.6);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  }
+
+  .countdown-item {
+    background: rgba(var(--white), 0.5);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(var(--white), 0.7);
+    transition: transform 0.2s ease;
+  }
+
+  .countdown-item:hover {
+    transform: translateY(-2px);
+  }
+
+  .blob {
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    filter: blur(40px);
+    opacity: 0.3;
+    z-index: 0;
+    animation: blob-animation 25s infinite ease-in-out;
+  }
+
+  .blob-1 {
+    background: rgba(var(--navy-blue), 0.2);
+    top: -15%;
+    right: -15%;
+  }
+
+  .blob-2 {
+    background: rgba(var(--gold), 0.2);
+    bottom: -15%;
+    left: -15%;
+    animation-delay: -5s;
+  }
+}
+
+/* Animations */
+@keyframes blob-animation {
+  0% {
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  33% {
+    transform: translate(2%, 2%) scale(1.1) rotate(120deg);
+  }
+  66% {
+    transform: translate(-2%, -2%) scale(0.9) rotate(240deg);
+  }
+  100% {
+    transform: translate(0, 0) scale(1) rotate(360deg);
+  }
 }
